@@ -56,6 +56,7 @@ textarea{min-height:110px;resize:vertical}
 .prev{width:100%;max-height:220px;object-fit:cover;border-radius:12px}
 .lb{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center}
 .lb.on{display:flex}.lb img{max-width:100%;max-height:100%}
+.gift .fab,.gift #cfg,.gift .ed{display:none!important}
 </style>
 </head>
 <body>
@@ -89,10 +90,11 @@ textarea{min-height:110px;resize:vertical}
   <label for="ss">Frase corta</label><input id="ss" maxlength="90" placeholder="Tus años, tus mejores momentos"><label for="sf">Tu nombre (de parte de)</label><input id="sf" maxlength="40" placeholder="Luis">
   <label for="sd">Fecha de nacimiento</label><input id="sd" type="date">
   <label for="sp">Enlace de Spotify (canción, álbum o playlist)</label><input id="sp" inputmode="url" placeholder="https://open.spotify.com/track/…"><label for="sl">Tu mensaje final</label><textarea id="sl" placeholder="Feliz cumpleaños, mi amor. Quiero decirte que…"></textarea>
-  <div class="row"><button class="btn" id="ssave">Guardar</button><button class="btn ghost" id="scancel">Cancelar</button></div>
+  <div class="row"><button class="btn" id="ssave">Guardar</button><button class="btn ghost" id="scancel">Cancelar</button></div><div class="row"><button class="btn" id="sexp">Descargar versión para regalar</button></div><p style="font-size:13px;color:var(--soft);margin:8px 0 0">Descarga un index.html con tus fotos y textos ya incluidos. Súbelo a GitHub para que cualquiera vea el álbum completo.</p>
 </div></div>
 <div class="lb" id="lb"><img alt=""></div>
 
+<script id="seed" type="application/json">null</script>
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -119,7 +121,7 @@ function counter(){
 function spotify(){
   const m=$('#music'),u=meta.spotify||'';
   const x=u.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|album|playlist|episode|artist)\/([A-Za-z0-9]+)/);
-  if(!x){m.innerHTML='<h2>La canción de tu cumpleaños</h2><p class="empty">Toca «Personalizar» y pega el enlace de Spotify de la canción que quieres dedicarle.</p>';return}
+  if(!x){m.hidden=document.body.classList.contains('gift');m.innerHTML='<h2>La canción de tu cumpleaños</h2><p class="empty">Toca «Personalizar» y pega el enlace de Spotify de la canción que quieres dedicarle.</p>';return}
   const h=x[1]==='track'||x[1]==='episode'?152:352;
   m.innerHTML=`<h2>La canción de tu cumpleaños</h2><iframe src="https://open.spotify.com/embed/${x[1]}/${x[2]}" height="${h}" allow="encrypted-media; autoplay; clipboard-write" loading="lazy" title="Spotify"></iframe><p style="margin:8px 0 0"><a href="https://open.spotify.com/${x[1]}/${x[2]}" target="_blank" rel="noopener">Abrir en Spotify</a></p>`;
 }
@@ -158,9 +160,27 @@ $('#ecancel').onclick=()=>close('#edit');
 $('#edel').onclick=async()=>{if(confirm('¿Borrar esta foto del álbum?')){photos.splice(cur,1);await put('photos',photos);close('#edit');render()}};
 $('#cfg').onclick=()=>{$('#sn').value=meta.names;$('#ss').value=meta.sub;$('#sd').value=meta.since;$('#sp').value=meta.spotify;$('#sf').value=meta.from;$('#sl').value=meta.letter;$('#set').classList.add('on')};
 $('#scancel').onclick=()=>close('#set');
+$('#sexp').onclick=async()=>{
+  try{
+    const r=await fetch(location.href.split('#')[0],{cache:'no-store'});let h=await r.text();
+    const data=JSON.stringify({photos,meta}).replace(/</g,'\\u003c');
+    const re=/<script id="seed" type="application\/json">[\s\S]*?<\/script>/;
+    if(!re.test(h))throw 0;
+    h=h.replace(re,()=>'<script id="seed" type="application/json">'+data+'<\/script>');
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));a.download='index.html';document.body.appendChild(a);a.click();a.remove();
+  }catch(e){alert('No se pudo preparar el archivo. Abre el álbum desde tu enlace de GitHub y vuelve a intentarlo.')}
+};
 $('#ssave').onclick=async()=>{meta={names:$('#sn').value.trim(),sub:$('#ss').value.trim(),since:$('#sd').value,spotify:$('#sp').value.trim(),from:$('#sf').value.trim(),letter:$('#sl').value.trim()};await put('meta',meta);close('#set');render()};
 
-(async()=>{photos=(await get('photos'))||[];meta=Object.assign(meta,(await get('meta'))||{});render()})();
+let seed=null;try{seed=JSON.parse($('#seed').textContent)}catch(e){}
+const editMode=!seed||location.hash==='#editar';
+document.body.classList.toggle('gift',!editMode);
+(async()=>{
+  if(!editMode){photos=seed.photos||[];meta=Object.assign(meta,seed.meta||{})}
+  else{photos=(await get('photos'))||[];meta=Object.assign(meta,(await get('meta'))||{});
+    if(!photos.length&&seed){photos=seed.photos||[];meta=Object.assign(meta,seed.meta||{})}}
+  render();
+})();
 </script>
 </body>
 </html>
