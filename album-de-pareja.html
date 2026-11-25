@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feliz cumpleaños</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbeef0;--card:#fffdfb;--ink:#3b1426;--soft:#8a5568;--rose:#d6456b;--pink:#f2b8c6;--tape:#e9c98f;--sh:rgba(91,26,51,.18);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1e0c16;--card:#2c1422;--ink:#fbe6ec;--soft:#d9a3b5;--rose:#ff7a9a;--pink:#6b2a43;--tape:#8a6b3a;--sh:rgba(0,0,0,.5)}}
+:root[data-theme="dark"]{--bg:#1e0c16;--card:#2c1422;--ink:#fbe6ec;--soft:#d9a3b5;--rose:#ff7a9a;--pink:#6b2a43;--tape:#8a6b3a;--sh:rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Quicksand,system-ui,sans-serif;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.hearts i{position:absolute;bottom:-30px;color:var(--rose);opacity:0;font-style:normal;animation:up linear infinite}
+@keyframes up{10%{opacity:.35}100%{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.hearts{display:none}}
+.wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 18px 120px}
+.hero{text-align:center;padding:48px 0 22px}
+.hero h1{font:italic 700 clamp(34px,11vw,56px)/1 "Cormorant Garamond",Georgia,serif;margin:0;color:var(--rose);letter-spacing:-.5px}
+.hero p{margin:10px 0 0;color:var(--soft);font-size:15px}
+.count{display:inline-flex;gap:14px;margin-top:18px;padding:12px 22px;background:var(--card);border-radius:999px;box-shadow:0 6px 20px var(--sh)}
+.count b{display:block;font:700 28px/1 "Cormorant Garamond",Georgia,serif;color:var(--rose)}
+.count span{font-size:12px;color:var(--soft)}
+.btn{border:0;font:600 14px Quicksand,system-ui,sans-serif;padding:10px 18px;border-radius:999px;background:var(--rose);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--soft);box-shadow:inset 0 0 0 1.5px var(--pink)}
+.btn.red{background:transparent;color:#c0334f;box-shadow:inset 0 0 0 1.5px #c0334f}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.music{margin:6px 0 30px;padding:14px;background:var(--card);border-radius:20px;box-shadow:0 6px 20px var(--sh)}
+.music h2{font:italic 700 22px "Cormorant Garamond",Georgia,serif;margin:0 0 10px;color:var(--rose)}
+.music iframe{width:100%;border:0;border-radius:14px;display:block}
+.music a{color:var(--soft);font-size:13px}
+.music .empty{color:var(--soft);font-size:14px;margin:0}
+.pol{background:var(--card);padding:12px 12px 18px;border-radius:6px;box-shadow:0 10px 26px var(--sh);margin:0 0 44px;position:relative;transform:rotate(var(--r,0deg))}
+.pol:before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:var(--tape);opacity:.75;transform:rotate(-3deg)}
+.pol img{width:100%;display:block;border-radius:3px;cursor:zoom-in;background:var(--pink)}
+.pol time{display:block;margin:14px 4px 0;font-size:13px;color:var(--soft)}
+.pol h3{font:italic 700 28px/1.1 "Cormorant Garamond",Georgia,serif;margin:4px 4px 6px;color:var(--rose)}
+.pol p{margin:0 4px;white-space:pre-wrap;font-size:16px}
+.pol .ed{margin:12px 4px 0;font-size:13px;padding:6px 14px}
+.letter{background:var(--card);border-radius:20px;padding:26px 22px;box-shadow:0 6px 20px var(--sh);margin-top:10px}.letter h2{font:italic 700 28px "Cormorant Garamond",Georgia,serif;color:var(--rose);margin:0 0 10px}.letter p{white-space:pre-wrap;margin:0;font-size:17px;line-height:1.75}.letter .sig{margin-top:16px;font:italic 700 24px "Cormorant Garamond",Georgia,serif;color:var(--rose);text-align:right}
+.void{text-align:center;color:var(--soft);padding:40px 10px}
+.void big{display:block;font-size:56px;color:var(--rose)}
+.fab{position:fixed;z-index:5;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));padding:15px 22px;font-size:16px;box-shadow:0 8px 22px var(--sh)}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(30,12,22,.55);display:none;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex}
+.sheet .in{width:100%;max-width:520px;max-height:92%;overflow:auto;background:var(--card);border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom,0px))}
+.sheet h2{font:italic 700 26px "Cormorant Garamond",Georgia,serif;margin:0 0 12px;color:var(--rose)}
+label{display:block;font-size:14px;color:var(--soft);margin:12px 0 4px}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--pink);border-radius:12px;padding:11px 12px}
+textarea{min-height:110px;resize:vertical}
+.row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.prev{width:100%;max-height:220px;object-fit:cover;border-radius:12px}
+.lb{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center}
+.lb.on{display:flex}.lb img{max-width:100%;max-height:100%}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="hero">
+    <h1 id="names">Feliz cumpleaños</h1>
+    <p id="sub">Tus años, tus mejores momentos, contados uno por uno</p>
+    <div class="count" id="count" hidden></div>
+    <div style="margin-top:16px"><button class="btn ghost" id="cfg">Personalizar</button></div>
+  </header>
+  <section class="music" id="music"></section>
+  <main id="feed"></main>
+  <section class="letter" id="letter" hidden></section>
+</div>
+<button class="btn fab" id="add">Agregar fotos</button>
+<input type="file" id="file" accept="image/*" multiple hidden>
+
+<div class="sheet" id="edit"><div class="in">
+  <h2>Cuenta este momento</h2>
+  <img class="prev" id="eimg" alt="">
+  <label for="et">Título</label><input id="et" maxlength="60" placeholder="El día que cumpliste 20">
+  <label for="ed">¿Cuándo fue?</label><input id="ed" type="date">
+  <label for="etx">¿Qué quieres decir de este momento?</label><textarea id="etx" placeholder="Ese día vi lo increíble que eres cuando…"></textarea>
+  <div class="row"><button class="btn" id="esave">Guardar</button><button class="btn ghost" id="ecancel">Cancelar</button><button class="btn red" id="edel">Borrar foto</button></div>
+</div></div>
+
+<div class="sheet" id="set"><div class="in">
+  <h2>Personaliza tu álbum</h2>
+  <label for="sn">Nombre de quien cumple años</label><input id="sn" maxlength="40" placeholder="Ana">
+  <label for="ss">Frase corta</label><input id="ss" maxlength="90" placeholder="Tus años, tus mejores momentos"><label for="sf">Tu nombre (de parte de)</label><input id="sf" maxlength="40" placeholder="Luis">
+  <label for="sd">Fecha de nacimiento</label><input id="sd" type="date">
+  <label for="sp">Enlace de Spotify (canción, álbum o playlist)</label><input id="sp" inputmode="url" placeholder="https://open.spotify.com/track/…"><label for="sl">Tu mensaje final</label><textarea id="sl" placeholder="Feliz cumpleaños, mi amor. Quiero decirte que…"></textarea>
+  <div class="row"><button class="btn" id="ssave">Guardar</button><button class="btn ghost" id="scancel">Cancelar</button></div>
+</div></div>
+<div class="lb" id="lb"><img alt=""></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let photos=[],meta={names:'',sub:'',since:'',spotify:'',from:'',letter:''},cur=null,mem={};
+const dbp=new Promise(res=>{try{const r=indexedDB.open('album-pareja',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}});
+async function get(k){const db=await dbp;if(!db)return mem[k];return new Promise(r=>{try{const q=db.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>r(q.result);q.onerror=()=>r()}catch(e){r()}})}
+async function put(k,v){mem[k]=v;const db=await dbp;if(!db)return;try{db.transaction('kv','readwrite').objectStore('kv').put(v,k)}catch(e){}}
+
+// corazones flotantes
+(function(){const h=$('#hearts');for(let i=0;i<12;i++){const e=document.createElement('i');e.textContent='♥';e.style.left=Math.random()*100+'%';e.style.fontSize=(12+Math.random()*18)+'px';e.style.animationDuration=(9+Math.random()*9)+'s';e.style.animationDelay=(-Math.random()*14)+'s';h.appendChild(e)}})();
+
+function counter(){
+  const c=$('#count');
+  if(!meta.since){c.hidden=true;return}
+  const a=new Date(meta.since+'T00:00:00'),n=new Date();
+  if(isNaN(a)||a>n){c.hidden=true;return}
+  let y=n.getFullYear()-a.getFullYear(),m=n.getMonth()-a.getMonth(),d=n.getDate()-a.getDate();
+  if(d<0){m--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}
+  if(m<0){y--;m+=12}
+  const days=Math.floor((n-a)/864e5);
+  c.innerHTML=`<div><b>${y}</b><span>años</span></div><div><b>${m}</b><span>meses</span></div><div><b>${d}</b><span>días</span></div><div><b>${days}</b><span>días de vida</span></div>`;
+  c.hidden=false;
+}
+function spotify(){
+  const m=$('#music'),u=meta.spotify||'';
+  const x=u.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|album|playlist|episode|artist)\/([A-Za-z0-9]+)/);
+  if(!x){m.innerHTML='<h2>La canción de tu cumpleaños</h2><p class="empty">Toca «Personalizar» y pega el enlace de Spotify de la canción que quieres dedicarle.</p>';return}
+  const h=x[1]==='track'||x[1]==='episode'?152:352;
+  m.innerHTML=`<h2>La canción de tu cumpleaños</h2><iframe src="https://open.spotify.com/embed/${x[1]}/${x[2]}" height="${h}" allow="encrypted-media; autoplay; clipboard-write" loading="lazy" title="Spotify"></iframe><p style="margin:8px 0 0"><a href="https://open.spotify.com/${x[1]}/${x[2]}" target="_blank" rel="noopener">Abrir en Spotify</a></p>`;
+}
+function fdate(s){if(!s)return'';const d=new Date(s+'T00:00:00');return isNaN(d)?'':d.toLocaleDateString('es',{day:'numeric',month:'long',year:'numeric'})}
+function ageAt(s){if(!meta.since)return'';const b=new Date(meta.since+'T00:00:00'),d=new Date(s+'T00:00:00');if(isNaN(b)||isNaN(d)||d<b)return'';let a=d.getFullYear()-b.getFullYear();if(d.getMonth()<b.getMonth()||(d.getMonth()===b.getMonth()&&d.getDate()<b.getDate()))a--;return a>=1?' · a los '+a+' años':''}
+function letter(){const l=$('#letter');if(!meta.letter){l.hidden=true;return}l.hidden=false;l.innerHTML=`<h2>Mi mensaje para ti</h2><p>${esc(meta.letter)}</p>${meta.from?`<div class="sig">Con amor, ${esc(meta.from)}</div>`:''}`}
+function render(){
+  $('#names').textContent=meta.names?'Feliz cumpleaños, '+meta.names:'Feliz cumpleaños';
+  $('#sub').textContent=meta.sub||'Tus años, tus mejores momentos, contados uno por uno';
+  counter();spotify();letter();
+  const f=$('#feed');
+  if(!photos.length){f.innerHTML='<div class="void"><big>♥</big>Aquí vivirán los mejores momentos de sus años.<br>Toca «Agregar fotos» y cuenta cada historia.</div>';return}
+  const ord=photos.map((p,i)=>i).sort((a,b)=>(photos[a].date||'9').localeCompare(photos[b].date||'9'));
+  f.innerHTML=ord.map((i,k)=>{const p=photos[i];return `<article class="pol" style="--r:${k%2?1.2:-1.2}deg"><img src="${p.img}" alt="${esc(p.title)||'Recuerdo'}" data-i="${i}">${p.date?`<time>${fdate(p.date)}${ageAt(p.date)}</time>`:''}${p.title?`<h3>${esc(p.title)}</h3>`:''}${p.text?`<p>${esc(p.text)}</p>`:''}<button class="btn ghost ed" data-e="${i}">Editar</button></article>`}).join('');
+}
+function shrink(file){return new Promise(res=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const s=Math.min(1,1100/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',.8))};im.onerror=()=>res(null);im.src=u})}
+function openEdit(i){cur=i;const p=photos[i];$('#eimg').src=p.img;$('#et').value=p.title;$('#ed').value=p.date;$('#etx').value=p.text;$('#edit').classList.add('on')}
+const close=id=>$(id).classList.remove('on');
+
+$('#add').onclick=()=>$('#file').click();
+$('#file').onchange=async e=>{
+  const fs=[...e.target.files];if(!fs.length)return;
+  const first=photos.length;
+  for(const f of fs){const img=await shrink(f);if(img)photos.push({id:Date.now()+Math.random(),img,title:'',text:'',date:new Date().toISOString().slice(0,10)})}
+  e.target.value='';await put('photos',photos);render();
+  if(photos.length>first)openEdit(first);
+};
+$('#feed').onclick=e=>{
+  const t=e.target;
+  if(t.dataset.e!==undefined)openEdit(+t.dataset.e);
+  else if(t.dataset.i!==undefined){$('#lb img').src=photos[+t.dataset.i].img;$('#lb').classList.add('on')}
+};
+$('#lb').onclick=()=>close('#lb');
+$('#esave').onclick=async()=>{const p=photos[cur];p.title=$('#et').value.trim();p.date=$('#ed').value;p.text=$('#etx').value.trim();await put('photos',photos);close('#edit');render()};
+$('#ecancel').onclick=()=>close('#edit');
+$('#edel').onclick=async()=>{if(confirm('¿Borrar esta foto del álbum?')){photos.splice(cur,1);await put('photos',photos);close('#edit');render()}};
+$('#cfg').onclick=()=>{$('#sn').value=meta.names;$('#ss').value=meta.sub;$('#sd').value=meta.since;$('#sp').value=meta.spotify;$('#sf').value=meta.from;$('#sl').value=meta.letter;$('#set').classList.add('on')};
+$('#scancel').onclick=()=>close('#set');
+$('#ssave').onclick=async()=>{meta={names:$('#sn').value.trim(),sub:$('#ss').value.trim(),since:$('#sd').value,spotify:$('#sp').value.trim(),from:$('#sf').value.trim(),letter:$('#sl').value.trim()};await put('meta',meta);close('#set');render()};
+
+(async()=>{photos=(await get('photos'))||[];meta=Object.assign(meta,(await get('meta'))||{});render()})();
+</script>
+</body>
+</html>
